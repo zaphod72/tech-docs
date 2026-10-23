@@ -1,0 +1,4 @@
+plan/
+.workspaces/
+node_modules/
+.claude/
