@@ -1,0 +1,17 @@
+{
+  "name": "tech-docs",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p packages/core/tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2",
+    "vitest": "5.0.5"
+  }
+}
