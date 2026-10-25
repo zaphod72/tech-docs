@@ -61,4 +61,8 @@ describe('validates 5 style presets and rejects invalid doc-style.json schema', 
   it('rejects a doc-style.json with a non-string preset id', () => {
     expect(() => parseDocStyleJson({ presetId: 42 })).toThrow();
   });
+
+  it('rejects a doc-style.json with a non-string user guidance', () => {
+    expect(() => parseDocStyleJson({ presetId: 'diataxis-howto', userGuidance: 42 })).toThrow();
+  });
 });
