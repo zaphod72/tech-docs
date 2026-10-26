@@ -1,4 +1,20 @@
-plan/
+# runtime state (SQLite, repo clones, caches, PR outbox)
 .workspaces/
+
+# dependencies
 node_modules/
-.claude/
+
+# build output
+dist/
+.next/
+*.tsbuildinfo
+coverage/
+
+# preview runner synced content and engine caches (written at runtime by PreviewRunnerManager)
+runners/*/content/
+runners/docusaurus/.docusaurus/
+runners/starlight/.astro/
+
+# local secrets
+.env
+.env.local

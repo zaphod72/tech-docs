@@ -1,0 +1,31 @@
+# Local hooks only (no remote hook repos) so a clean clone works without network.
+# Install once: `pre-commit install`. All hooks assume `npm install` has been run.
+repos:
+  - repo: local
+    hooks:
+      - id: prettier-check
+        name: prettier --check
+        entry: npx prettier --check
+        language: system
+        types_or: [ts, tsx, javascript, json, yaml, markdown]
+        exclude: ^(package-lock\.json|packages/core/drizzle/)
+
+      - id: eslint
+        name: eslint
+        entry: npx eslint --max-warnings=0
+        language: system
+        types_or: [ts, tsx, javascript]
+
+      - id: typecheck
+        name: tsc --noEmit (all workspaces)
+        entry: npm run typecheck
+        language: system
+        pass_filenames: false
+        types_or: [ts, tsx]
+
+      - id: vitest-changed
+        name: vitest run --changed
+        entry: npx vitest run --project unit --changed
+        language: system
+        pass_filenames: false
+        types_or: [ts, tsx]
