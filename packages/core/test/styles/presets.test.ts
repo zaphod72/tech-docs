@@ -1,10 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  PRESET_IDS,
-  STYLE_PRESETS,
-  parseDocStyleJson,
-} from '../../src/styles/presets';
+import { PRESET_IDS, STYLE_PRESETS, parseDocStyleJson } from '../../src/styles/presets';
 
 // Expected literals come from the plan Q4 spec (Module 3 StylePresetConfig
 // id union), never recomputed from the implementation under test.

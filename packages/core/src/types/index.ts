@@ -1,5 +1,10 @@
 // Shared contracts for the tech-docs platform (LOCAL-U1, Wave 1).
 // Wave-2 units (U2-U4) consume but must not modify this file.
+//
+// Approved amendments (plan/implementation-plan.md §3), all additive and source-compatible:
+//   [D10] optional `filePath` parameter on DialectCompiler.normalizeToCanonical — applied (U1).
+//   [D19] optional `driftTrigger` field on DocSyncEngine.verifyAndSyncDocs options — lands in U3.
+// New types belong in sibling files under src/types/, never here.
 
 export type EngineDialect = 'mdx' | 'docusaurus' | 'starlight';
 
@@ -18,7 +23,11 @@ export interface DialectCompileResult {
 }
 
 export interface DialectCompiler {
-  normalizeToCanonical(rawMarkdown: string, sourceHint?: EngineDialect): CanonicalDocInput;
+  /**
+   * @param filePath Canonical relative path recorded on the returned `CanonicalDocInput.filePath`
+   *                 (e.g. `guides/setup.md`). Defaults to `''` when omitted. [D10]
+   */
+  normalizeToCanonical(rawMarkdown: string, sourceHint?: EngineDialect, filePath?: string): CanonicalDocInput;
   compileCanonicalMarkdown(input: CanonicalDocInput, target: EngineDialect): DialectCompileResult;
 }
 
@@ -156,7 +165,11 @@ export interface JobProgressSink {
 
 export interface RewriteOrchestrator {
   runSampleRewrite(req: SampleRewriteRequest, gateway: RewriteModelGateway): Promise<SampleCandidateResult[]>;
-  runBatchRewrite(req: BatchRewriteRequest, gateway: RewriteModelGateway, sink: JobProgressSink): Promise<BatchRewriteReport>;
+  runBatchRewrite(
+    req: BatchRewriteRequest,
+    gateway: RewriteModelGateway,
+    sink: JobProgressSink,
+  ): Promise<BatchRewriteReport>;
 }
 
 export interface RepoSpec {
@@ -228,7 +241,10 @@ export interface PreviewRunnerManager {
   getRunnerStatus(engine: EngineDialect): Promise<RunnerStatus>;
   ensureRunnerStarted(engine: EngineDialect): Promise<RunnerStatus>;
   resolvePreviewUrl(engine: EngineDialect, canonicalFilePath: string): Promise<string>;
-  syncPreviewContent(engine: EngineDialect, files: RenderedFileMap): Promise<{ syncedCount: number; timestamp: number }>;
+  syncPreviewContent(
+    engine: EngineDialect,
+    files: RenderedFileMap,
+  ): Promise<{ syncedCount: number; timestamp: number }>;
   shutdownAllRunners(): Promise<void>;
 }
 
