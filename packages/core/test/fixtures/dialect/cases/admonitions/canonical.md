@@ -1,0 +1,25 @@
+# Admonitions
+
+:::note
+A plain note.
+:::
+
+:::tip[Pro tip]
+Titled tip with _emphasis_.
+:::
+
+:::info
+Informational.
+:::
+
+:::warning
+Be careful.
+:::
+
+:::danger[Stop]
+Destructive action.
+:::
+
+:::caution
+Alias of warning.
+:::

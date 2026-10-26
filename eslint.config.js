@@ -1,23 +1,22 @@
 import eslint from '@eslint/js';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
+export default defineConfig([
+  globalIgnores([
+    '**/node_modules/**',
+    '**/dist/**',
+    '**/.next/**',
+    '.workspaces/**',
+    'runners/*/content/**',
+    'runners/docusaurus/.docusaurus/**',
+    'runners/starlight/.astro/**',
+    'packages/core/drizzle/**',
+    'coverage/**',
+  ]),
   {
-    ignores: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/.next/**',
-      '.workspaces/**',
-      'runners/*/content/**',
-      'runners/docusaurus/.docusaurus/**',
-      'runners/starlight/.astro/**',
-      'packages/core/drizzle/**',
-      'coverage/**',
-    ],
-  },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  {
+    files: ['**/*.{ts,tsx,mts,cts}'],
+    extends: [eslint.configs.recommended, tseslint.configs.recommendedTypeChecked],
     languageOptions: {
       parserOptions: {
         projectService: {
@@ -36,6 +35,7 @@ export default tseslint.config(
   {
     // Plain JS/MJS (scripts/, runners/mdx/server.mjs, config files) is linted without type information.
     files: ['**/*.{js,mjs,cjs}'],
-    ...tseslint.configs.disableTypeChecked,
+    extends: [eslint.configs.recommended],
+    languageOptions: { sourceType: 'module' },
   },
-);
+]);

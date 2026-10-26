@@ -8,3 +8,5 @@
 
 export * from './types/index.js';
 export * from './styles/presets.js';
+export * from './types/directives.js';
+export * from './dialect/index.js';
