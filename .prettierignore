@@ -8,3 +8,6 @@ runners/*/content/
 runners/docusaurus/.docusaurus/
 runners/starlight/.astro/
 packages/core/drizzle/
+# Golden fixtures are byte-for-byte test contracts; Prettier rewrites
+# directive markdown (e.g. tabs canonical) into unparseable form.
+packages/core/test/fixtures/
